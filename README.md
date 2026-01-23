@@ -59,4 +59,4 @@ I implemented a series of UI/UX enhancements focused on engagement:
 
 A fast-loading, professional-grade portfolio that successfully balances aesthetics with functionality. The site is fully responsive, easy to maintain, and ready for deployment.
 
-🔗 **Live demo:** Coming soon (Vercel deployment)
+🔗 **Live demo:** (https://design-for-your-home.vercel.app/)
