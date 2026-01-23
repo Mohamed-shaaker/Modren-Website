@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -10,13 +10,18 @@
     />
     <title>Design for your Home — Interior Design Studio</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/css/style.css" />
     <script src="assets/js/main.js" defer></script>
   </head>
   <body>
+    <div id="lightbox" class="lightbox">
+      <span class="lightbox-close">&times;</span>
+      <img id="lightbox-img" src="" alt="Enlarged view" />
+    </div>
+
     <header class="site-header">
       <div class="container">
         <a class="brand" href="#">Design for your Home</a>
@@ -24,6 +29,7 @@
           <div id="nav-links" class="nav-links-wrapper">
             <a class="nav-link" href="#services">Services</a>
             <a class="nav-link" href="#about">About</a>
+            <a class="nav-link" href="#gallery">Gallery</a>
             <a class="btn btn-primary nav-cta" href="#contact">Contact</a>
           </div>
 
@@ -43,7 +49,7 @@
     </header>
 
     <main>
-      <section class="container hero">
+      <section class="container hero reveal">
         <div class="hero-content">
           <h1>Interior design focused on how you live</h1>
           <p class="text-muted">
@@ -77,51 +83,119 @@
       </section>
 
       <section id="services" class="container section">
-        <div class="section-narrow">
+        <div class="section-narrow text-center mb-lg reveal">
           <h2>Services</h2>
           <p class="text-muted">
             Our services support full projects and focused design decisions.
           </p>
+        </div>
 
-          <p class="text-muted">Design for your Home works on one principle:</p>
-          <p><strong>Good design reduces friction in daily life.</strong></p>
+        <div class="grid-2 reveal">
+          <div class="service-card">
+            <div class="service-icon">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M2 22h20" />
+                <path d="M11 2 2 11" />
+                <path d="M15.5 6.5 6.5 15.5" />
+                <path d="M22 2 11 13" />
+              </svg>
+            </div>
+            <h3>Full Home Design</h3>
+            <p class="text-small text-muted">
+              End-to-end residential design covering layout planning, finishes,
+              lighting, and furniture.
+            </p>
+          </div>
 
-          <div class="card mt-lg">
-            <dl class="service-list">
-              <dt>Full Home Design</dt>
-              <dd>
-                End-to-end residential design covering layout planning,
-                finishes, lighting, and furniture.
-              </dd>
+          <div class="service-card">
+            <div class="service-icon">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M2 20h20" />
+                <path d="M5 20v-8a7 7 0 0 1 14 0v8" />
+                <path d="M12 12v8" />
+              </svg>
+            </div>
+            <h3>Renovation Management</h3>
+            <p class="text-small text-muted">
+              Design oversight during construction, contractor coordination, and
+              site reviews.
+            </p>
+          </div>
 
-              <dt>Renovation Management</dt>
-              <dd>
-                Design oversight during construction, contractor coordination,
-                and site reviews.
-              </dd>
+          <div class="service-card">
+            <div class="service-icon">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 21h6" />
+                <path d="M5 21a7 7 0 0 1 14 0v-9a7 7 0 0 0-14 0v9Z" />
+                <path d="M12 3v4" />
+              </svg>
+            </div>
+            <h3>Kitchen & Bath</h3>
+            <p class="text-small text-muted">
+              Functional planning focused on durability, storage efficiency, and
+              maintenance.
+            </p>
+          </div>
 
-              <dt>Kitchen & Bath Design</dt>
-              <dd>
-                Functional planning focused on durability, storage efficiency,
-                and maintenance.
-              </dd>
-
-              <dt>Styling & Staging</dt>
-              <dd>
-                Final-stage styling to complete a space or prepare a property
-                for presentation.
-              </dd>
-            </dl>
+          <div class="service-card">
+            <div class="service-icon">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"
+                />
+              </svg>
+            </div>
+            <h3>Styling & Staging</h3>
+            <p class="text-small text-muted">
+              Final-stage styling to complete a space or prepare a property for
+              presentation.
+            </p>
           </div>
         </div>
       </section>
 
-      <section id="about" class="container section">
+      <section id="about" class="container section reveal">
         <div class="section-narrow">
           <h2>About</h2>
           <p class="text-muted">
-            Design for your Home works on one principle: good design reduces
-            friction in daily life.
+            Design for your Home works on one principle:
+            <strong>good design reduces friction in daily life.</strong>
           </p>
           <p class="text-muted">
             We focus on layout, circulation, and long-term use before visual
@@ -131,47 +205,64 @@
         </div>
       </section>
 
-      <section class="container section">
-        <div class="section-narrow">
+      <section class="section bg-light reveal">
+        <div class="container section-narrow text-center">
+          <blockquote class="testimonial">
+            "They didn't just make our house look good, they made it work for
+            our family. The storage solutions in the entryway alone changed our
+            daily routine."
+          </blockquote>
+          <cite class="text-small text-muted mt-sm d-block"
+            >— Sarah & Mark J., Kitchen Remodel</cite
+          >
+        </div>
+      </section>
+
+      <section id="gallery" class="container section reveal">
+        <div class="section-narrow mb-md">
           <h2>Project Gallery</h2>
-          <p class="text-muted">Selected projects. Scope and outcome</p>
+          <p class="text-muted">Selected projects. Scope and outcome.</p>
         </div>
         <div class="grid-4 mt-md">
-          <figure>
+          <figure class="gallery-item">
             <img
               src="https://images.pexels.com/photos/206172/pexels-photo-206172.jpeg?auto=compress&cs=tinysrgb&w=800"
               alt="Living room"
               loading="lazy"
+              data-full="https://images.pexels.com/photos/206172/pexels-photo-206172.jpeg?auto=compress&cs=tinysrgb&w=1600"
             />
             <figcaption class="text-muted text-small mt-sm">
               Open-plan living
             </figcaption>
           </figure>
-          <figure>
+          <figure class="gallery-item">
             <img
               src="https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=800"
               alt="Kitchen"
               loading="lazy"
+              data-full="https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=1600"
             />
             <figcaption class="text-muted text-small mt-sm">
               Kitchen remodel · 2023
             </figcaption>
           </figure>
-          <figure>
+          <figure class="gallery-item">
             <img
               src="https://images.pexels.com/photos/271806/pexels-photo-271806.jpeg?auto=compress&cs=tinysrgb&w=800"
               alt="Bedroom"
               loading="lazy"
+              data-full="https://images.pexels.com/photos/271806/pexels-photo-271806.jpeg?auto=compress&cs=tinysrgb&w=1600"
             />
             <figcaption class="text-muted text-small mt-sm">
               Bedroom · 2022
             </figcaption>
           </figure>
-          <figure>
+          <figure class="gallery-item">
             <img
               src="https://images.pexels.com/photos/1571452/pexels-photo-1571452.jpeg?auto=compress&cs=tinysrgb&w=800"
               alt="Workspace"
               loading="lazy"
+              data-full="https://images.pexels.com/photos/1571452/pexels-photo-1571452.jpeg?auto=compress&cs=tinysrgb&w=1600"
             />
             <figcaption class="text-muted text-small mt-sm">
               Studio · 2025
@@ -180,16 +271,12 @@
         </div>
       </section>
 
-      <section id="contact" class="container section">
+      <section id="contact" class="container section reveal">
         <div class="section-narrow">
           <div class="card">
             <h2>Contact</h2>
             <p class="text-muted">
               Use the form below to share a brief overview of your project.
-            </p>
-
-            <p class="text-small text-muted">
-              We typically respond within 1–2 business days.
             </p>
             <p class="text-small text-muted mt-sm">
               This form does not store submissions yet.
@@ -241,13 +328,9 @@
 
     <footer class="site-footer">
       <div class="container footer-flex">
+        <div>© 2026 Design for your Home</div>
         <div>
-          <div>© 2026 Design for your Home · Interior Design Studio</div>
-        </div>
-        <div>
-          <a href="mailto:hello@designforyourhome.example"
-            >hello@designforyourhome.example</a
-          >
+          <a href="mailto:hello@example.com">hello@designforyourhome.example</a>
         </div>
       </div>
     </footer>

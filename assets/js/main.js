@@ -6,34 +6,66 @@ document.addEventListener("DOMContentLoaded", () => {
   if (toggleBtn && navLinks) {
     toggleBtn.addEventListener("click", () => {
       navLinks.classList.toggle("is-open");
-
-      // Accessibility: update aria-expanded
       const isOpen = navLinks.classList.contains("is-open");
       toggleBtn.setAttribute("aria-expanded", isOpen);
     });
   }
 
-  /* --- 2. CTA Reinforcement (Primary Conversion Cue) --- */
-  const hero = document.querySelector(".hero");
-  const navCta = document.querySelector(".nav-cta");
+  /* --- 2. Scroll Reveal Animations (New) --- */
+  const revealElements = document.querySelectorAll(".reveal");
 
-  if (hero && navCta) {
-    new IntersectionObserver(
-      ([entry]) => {
-        navCta.classList.toggle("cta-active", !entry.isIntersecting);
-      },
-      { threshold: 0.25 }
-    ).observe(hero);
+  const revealObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+          observer.unobserve(entry.target); // Run once per element
+        }
+      });
+    },
+    { threshold: 0.15 }, // Trigger when 15% of element is visible
+  );
+
+  revealElements.forEach((el) => revealObserver.observe(el));
+
+  /* --- 3. Lightbox Logic (New) --- */
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+  const closeBtn = document.querySelector(".lightbox-close");
+  const triggers = document.querySelectorAll(".gallery-item img");
+
+  triggers.forEach((img) => {
+    img.addEventListener("click", () => {
+      // Use the high-res data attribute if available, else current src
+      const fullSizeSrc = img.getAttribute("data-full") || img.src;
+      lightboxImg.src = fullSizeSrc;
+      lightbox.classList.add("active");
+    });
+  });
+
+  // Close when clicking X
+  if (closeBtn) {
+    closeBtn.addEventListener("click", () => {
+      lightbox.classList.remove("active");
+    });
   }
 
-  /* --- 3. Form Handling (Simulation) --- */
+  // Close when clicking outside the image
+  if (lightbox) {
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) {
+        lightbox.classList.remove("active");
+      }
+    });
+  }
+
+  /* --- 4. Form Handling (Simulation) --- */
   const contactForm = document.querySelector("form");
   const submitBtn = contactForm?.querySelector("button");
 
   if (contactForm && submitBtn) {
     contactForm.addEventListener("submit", (e) => {
       e.preventDefault();
-
       const originalText = submitBtn.innerText;
       submitBtn.innerText = "Sending...";
       submitBtn.disabled = true;
@@ -42,7 +74,6 @@ document.addEventListener("DOMContentLoaded", () => {
         submitBtn.innerText = "Message Sent!";
         submitBtn.style.backgroundColor = "#10b981";
         contactForm.reset();
-
         setTimeout(() => {
           submitBtn.innerText = originalText;
           submitBtn.disabled = false;
