@@ -137,11 +137,17 @@ p {
 
 /* Navigation */
 .site-header {
-  background: var(--color-surface);
+  background: rgba(255, 255, 255, 0.85);
+
+  /* Add the blur effect */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  /* Keep these from before */
   position: sticky;
   top: 0;
   z-index: 100;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid rgba(230, 233, 239, 0.5);
 }
 .site-header .container {
   display: flex;
