@@ -21,11 +21,12 @@ A high-fidelity, conversion-focused landing page for an interior design studio. 
 
 ## 📂 Project Structure
 
-assets/
+`assets/
 css/style.css # Modularized design tokens and component styles
 js/main.js # Consolidated logic for UI and API interactions
 images/ # Optimized project assets
 index.html # Clean, SEO-optimized structure
+`
 
 ## 📖 Case Study: From Portfolio to Platform
 

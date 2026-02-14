@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // --- 5. AI ANALYSIS FEATURE (Connected to Render) ---
+  // --- 5. AI ANALYSIS FEATURE
   const aiBtn = document.getElementById("aiBtn");
   const aiInput = document.getElementById("aiInput");
   const aiResponse = document.getElementById("aiResponse");
@@ -125,19 +125,26 @@ document.addEventListener("DOMContentLoaded", () => {
         "<em>Connecting to Intelligence Hub... (First request takes ~30s)</em>";
 
       try {
-        const res = await fetch(`${API_URL}/analyze`, {
+        // FIXED: Added trailing slash '/' to match backend routing
+        const res = await fetch(`${API_URL}/analyze/`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ description: text }),
         });
+
+        if (!res.ok) {
+          throw new Error(`Server error: ${res.status}`);
+        }
 
         const data = await res.json();
 
         if (data.analysis) {
           aiResponse.innerHTML = `<strong>AI Suggestion:</strong><br>${data.analysis}`;
         } else {
+          // Log the actual data to see what key is being returned if 'analysis' is missing
+          console.log("Backend returned:", data);
           aiResponse.innerText =
-            "The AI didn't return a clear answer. Please try again.";
+            "The AI answered, but the format was unexpected. Check console.";
         }
       } catch (err) {
         console.error(err);
