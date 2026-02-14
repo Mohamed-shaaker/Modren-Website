@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login — Interior Design Admin</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <style>
+      body {
+        background-color: #f9f9f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .login-card {
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        width: 100%;
+        max-width: 380px;
+        text-align: center;
+        border: 1px solid #eee;
+      }
+      .login-header {
+        margin-bottom: 30px;
+      }
+      .login-header h2 {
+        font-size: 1.5rem;
+        color: #111;
+        margin-bottom: 8px;
+      }
+      .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: #555;
+      }
+      .btn-full {
+        width: 100%;
+        justify-content: center;
+        margin-top: 10px;
+      }
+      .error-message {
+        color: #ef4444;
+        font-size: 0.85rem;
+        margin-top: 20px;
+        background: #fef2f2;
+        padding: 10px;
+        border-radius: 6px;
+        display: none; /* Hidden by default */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-card">
+      <div class="login-header">
+        <h2>Admin Portal</h2>
+        <p class="text-muted text-small">Please sign in to continue</p>
+      </div>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            name="username"
+            class="input-field"
+            placeholder="admin@example.com"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="input-field"
+            placeholder="••••••••"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full" id="login-btn">
+          Sign In
+        </button>
+
+        <p class="error-message" id="error-msg">
+          Invalid credentials. Please try again.
+        </p>
+      </form>
+    </div>
+
+    <script>
+      const loginForm = document.getElementById("login-form");
+      const errorMsg = document.getElementById("error-msg");
+      const loginBtn = document.getElementById("login-btn");
+
+      loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        // 1. UI Loading State
+        const originalText = loginBtn.innerText;
+        loginBtn.innerText = "Verifying...";
+        loginBtn.disabled = true;
+        errorMsg.style.display = "none";
+
+        // 2. Prepare Data (CRITICAL CHANGE HERE)
+        // Use URLSearchParams to send as application/x-www-form-urlencoded
+        const formData = new URLSearchParams();
+        formData.append("username", loginForm.email.value); // Use .value from your input
+        formData.append("password", loginForm.password.value);
+
+        try {
+          // 3. Call the Backend
+          const response = await fetch("http://127.0.0.1:8000/auth/token", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: formData,
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+
+            // 4. Save the "Key" (Token) to the browser
+            localStorage.setItem("access_token", data.access_token);
+
+            // 5. Redirect to the Dashboard
+            window.location.href = "admin.html";
+          } else {
+            const errorDetail = await response.json();
+            throw new Error(errorDetail.detail || "Login failed");
+          }
+        } catch (error) {
+          console.error("Login Error:", error);
+          errorMsg.style.display = "block";
+          errorMsg.innerText =
+            error.message === "Login failed"
+              ? "Invalid email or password."
+              : "Server error. Is the backend running?";
+
+          loginBtn.innerText = originalText;
+          loginBtn.disabled = false;
+        }
+      });
+    </script>
+  </body>
+</html>

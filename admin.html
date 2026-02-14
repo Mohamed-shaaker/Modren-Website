@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard — Interior Design Studio</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <style>
+      /* Navbar specific for Admin */
+      .navbar {
+        background: #ffffff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+      }
+      .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 5%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .logo,
+      .nav-links a {
+        color: #333 !important;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .admin-container {
+        padding: 140px 5% 60px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .dashboard-header {
+        margin-bottom: 40px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+      }
+      .leads-table-container {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+      }
+      th,
+      td {
+        padding: 20px;
+        border-bottom: 1px solid #f0f0f0;
+      }
+      th {
+        background-color: #fcfcfc;
+        font-weight: 600;
+        color: #b39274;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 1.2px;
+      }
+      tr:hover {
+        background-color: #fdfaf7;
+      }
+      .badge {
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        background: #f0ede9;
+        color: #8d735b;
+        font-weight: 500;
+      }
+      .loading-state {
+        padding: 60px;
+        text-align: center;
+        color: #999;
+        font-style: italic;
+      }
+      .email-link {
+        color: #b39274;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition: 0.3s;
+      }
+      .email-link:hover {
+        border-bottom-color: #b39274;
+      }
+      /* New Logout Button Style */
+      .logout-btn {
+        background: none;
+        border: 1px solid #ef4444;
+        color: #ef4444;
+        padding: 5px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+      }
+      .logout-btn:hover {
+        background: #ef4444;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="logo">Design for your Home</a>
+
+        <div
+          class="nav-links"
+          style="display: flex; gap: 20px; align-items: center"
+        >
+          <a
+            href="http://127.0.0.1:8000/docs"
+            target="_blank"
+            style="
+              color: #4f46e5 !important;
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              background: rgba(79, 70, 229, 0.1);
+              padding: 8px 16px;
+              border-radius: 20px;
+            "
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M2 12h20M2 12l5-5m-5 5l5 5" />
+            </svg>
+            System Intelligence
+          </a>
+
+          <a href="index.html">← Back to Site</a>
+          <button onclick="logout()" class="logout-btn">Sign Out</button>
+        </div>
+      </div>
+    </nav>
+
+    <main class="admin-container">
+      <div class="dashboard-header">
+        <div>
+          <h1>Project Inquiries</h1>
+          <p>Direct submissions from your portfolio contact form.</p>
+        </div>
+      </div>
+
+      <div class="leads-table-container">
+        <table id="leads-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Project/Location</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody id="leads-body">
+            <tr>
+              <td colspan="5" class="loading-state">
+                Fetching leads from database...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <script>
+      // --- 1. THE BOUNCER (Security Check) ---
+      const token = localStorage.getItem("access_token");
+
+      if (!token) {
+        // If no token exists, force them back to login
+        window.location.href = "login.html";
+      }
+
+      // --- 2. LOGOUT FUNCTION ---
+      function logout() {
+        localStorage.removeItem("access_token");
+        window.location.href = "login.html";
+      }
+
+      /**
+       * Fetches leads from the backend with retry logic.
+       */
+      async function fetchLeads(retries = 3, backoff = 1000) {
+        const tableBody = document.getElementById("leads-body");
+        // NOTE: Change this URL to your Render URL when deploying!
+        const apiUrl = "http://127.0.0.1:8000/leads/";
+
+        try {
+          const response = await fetch(apiUrl, {
+            method: "GET",
+            // --- 3. THE SECRET HANDSHAKE (Auth Header) ---
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (response.status === 401) {
+            // If token is expired or invalid
+            logout();
+            return;
+          }
+
+          if (!response.ok) {
+            throw new Error(`Server responded with ${response.status}`);
+          }
+
+          const leads = await response.json();
+
+          if (!leads || leads.length === 0) {
+            tableBody.innerHTML =
+              '<tr><td colspan="5" class="loading-state">No inquiries found yet.</td></tr>';
+            return;
+          }
+
+          tableBody.innerHTML = "";
+
+          leads.forEach((lead) => {
+            const row = document.createElement("tr");
+            const name = lead.full_name || "No Name";
+            const email = lead.email || "";
+            const project = lead.project_type || "General";
+            const desc = lead.description || "";
+
+            row.innerHTML = `
+                        <td><span style="color: #ccc;">#${lead.id}</span></td>
+                        <td><strong>${name}</strong></td>
+                        <td><a href="mailto:${email}" class="email-link">${email}</a></td>
+                        <td><span class="badge">${project}</span></td>
+                        <td style="max-width: 400px; line-height: 1.5; color: #555;">${desc}</td>
+                    `;
+            tableBody.appendChild(row);
+          });
+        } catch (error) {
+          console.error("Dashboard Fetch Error:", error);
+
+          if (retries > 0) {
+            const nextBackoff = backoff * 1.5;
+            tableBody.innerHTML = `<tr><td colspan="5" class="loading-state">Connection failed. Retrying...</td></tr>`;
+            setTimeout(() => fetchLeads(retries - 1, nextBackoff), backoff);
+          } else {
+            tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="5" class="loading-state" style="color: #ef4444;">
+                                <strong>Connection Failed</strong><br>
+                                <small>${error.message || "Network Error"}</small>
+                            </td>
+                        </tr>`;
+          }
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        fetchLeads();
+      });
+    </script>
+  </body>
+</html>

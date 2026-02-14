@@ -282,6 +282,32 @@ p {
   cursor: pointer;
 }
 
+/* --- AI Feature Styling --- */
+.ai-textarea {
+  min-height: 120px;
+  resize: vertical;
+  margin-bottom: var(--space-sm);
+}
+
+.ai-button {
+  width: 100%;
+}
+
+.ai-result {
+  margin-top: var(--space-md);
+  padding: var(--space-md);
+  background-color: var(--color-bg-alt); /* Uses your existing light gray */
+  border-radius: var(--radius-sm);
+  border-left: 4px solid var(--color-primary);
+  text-align: left;
+  white-space: pre-wrap;
+  color: var(--color-text-main);
+  font-size: 14px;
+}
+
+.ai-result.hidden {
+  display: none;
+}
 /* Animations */
 .reveal {
   opacity: 0;

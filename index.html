@@ -270,7 +270,29 @@
           </figure>
         </div>
       </section>
+      <section id="ai-feature" class="container section reveal">
+        <div class="section-narrow text-center">
+          <h2>AI Design Assistant</h2>
+          <p class="text-muted">
+            Describe your room or style idea, and our AI will analyze the
+            feasibility and mood for you.
+          </p>
 
+          <div class="card mt-md">
+            <textarea
+              id="aiInput"
+              class="input-field ai-textarea"
+              placeholder="e.g., A small bedroom with dark green walls, oak floor, and mid-century modern furniture..."
+            ></textarea>
+
+            <button id="aiBtn" class="btn btn-primary ai-button">
+              Analyze My Idea
+            </button>
+
+            <div id="aiResponse" class="ai-result hidden"></div>
+          </div>
+        </div>
+      </section>
       <section id="contact" class="container section reveal">
         <div class="section-narrow">
           <div class="card">

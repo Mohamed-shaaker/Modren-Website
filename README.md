@@ -1,62 +1,46 @@
-# Design for your Home — Professional Interior Design Portfolio
+# Design for your Home — AI-Enhanced Interior Design Portfolio
 
-A high-fidelity, conversion-focused landing page for an interior design studio. This version upgrades the initial layout with enhanced UI/UX elements, interactive galleries, and social proof.
+A high-fidelity, conversion-focused landing page for an interior design studio. This version elevates the traditional portfolio into a functional web application by integrating a custom AI Design Assistant and a live backend for lead generation.
 
-This project is intentionally lightweight: built with semantic HTML, modern CSS, and vanilla JavaScript to ensure maximum performance and accessibility — no frameworks required.
+🔗 **Live Demo:** [https://design-for-your-home.vercel.app/](https://design-for-your-home.vercel.app/)
 
-## Features
+## 🚀 Key Features
 
-- **Dynamic Service Grid**: A modern 2x2 card layout with custom iconography for better scannability.
-- **Enhanced Gallery Interaction**: Integrated Lightbox functionality allowing users to view project images in high resolution.
-- **Social Proof Integration**: Dedicated testimonial section to build visitor trust and authority.
-- **Dynamic UX**: Smooth scroll-reveal animations and a sticky navigation bar with a primary CTA.
-- **Mobile-First Design**: Fully responsive architecture optimized for all screen sizes.
-- **Simulated Lead Generation**: Functional contact form with real-time submission feedback.
+- **AI Design Assistant**: A custom-integrated tool that allows users to describe room ideas and receive instant feasibility and mood analysis via a Python/FastAPI backend.
+- **Live Lead Generation**: A fully functional contact form connected to a Render-hosted API, handling real-time data submission and user feedback.
+- **Dynamic Service Grid**: A modern 2x2 card layout with custom iconography and hover effects.
+- **Enhanced Gallery Interaction**: Custom Lightbox logic for high-resolution project viewing.
+- **Performance Optimized**: Built with vanilla technologies to ensure a perfect Lighthouse score and sub-second load times.
 
-## Tech Stack
+## 🛠 Tech Stack
 
-- **HTML5**: Semantic structure for SEO and accessibility.
-- **CSS3**: Custom properties (CSS variables), Flexbox, and Grid.
-- **Vanilla JavaScript**: Intersection Observer API for animations and custom Lightbox logic.
+- **Frontend**: Semantic HTML5, CSS3 (Custom Properties & Grid), Vanilla JavaScript.
+- **Backend Integration**: RESTful API communication using the Fetch API.
+- **AI Backend**: Custom Python/FastAPI service hosted on Render, utilizing Large Language Models for design analysis.
+- **Deployment**: Vercel (Frontend) and Render (Backend).
 
-## Project Structure
+## 📂 Project Structure
 
-```
-index.html
 assets/
-  css/
-    style.css
-  js/
-    main.js
-  images/
-```
+css/style.css # Modularized design tokens and component styles
+js/main.js # Consolidated logic for UI and API interactions
+images/ # Optimized project assets
+index.html # Clean, SEO-optimized structure
 
-## Local Development
+## 📖 Case Study: From Portfolio to Platform
 
-Open `index.html` directly in your browser  
-or use a local server (recommended):
+### The Challenge
 
-```bash
-npx serve
-```
+Modern interior design clients seek engagement, not just a static gallery. The studio needed a way to provide immediate value to visitors before the first consultation.
 
-## Case Study (Short)
+### The Solution
 
-### Problem
+I transformed a standard portfolio into an interactive experience by:
 
-The studio needed to move beyond a simple "digital brochure" to a commercial portfolio that demonstrates quality, professionalism, and ease of contact without the overhead of heavy frameworks.
-
-### Solution
-
-I implemented a series of UI/UX enhancements focused on engagement:
-
-- Visual Hierarchy: Organized services into interactive cards to reduce cognitive load.
-- Engagement: Added a Lightbox to the gallery, acknowledging that interior design clients prioritize visual detail.
-- Motion Design: Utilized scroll-triggered animations to create a premium, "alive" feel.
-- Trust: Inserted client testimonials to provide immediate social proof.
+1. **Adding AI Engagement**: Implemented an "AI Design Assistant" to lower the barrier to entry for potential clients.
+2. **Standardizing Styles**: Removed all inline CSS to follow the "Separation of Concerns" principle, making the codebase maintainable and professional.
+3. **Live API Connection**: Replaced simulated form submissions with a live backend, ensuring the studio never misses a lead.
 
 ### Outcome
 
-A fast-loading, professional-grade portfolio that successfully balances aesthetics with functionality. The site is fully responsive, easy to maintain, and ready for deployment.
-
-🔗 **Live demo:** (https://design-for-your-home.vercel.app/)
+A professional-grade, full-stack portfolio that demonstrates both design sensibility and modern technical proficiency.
