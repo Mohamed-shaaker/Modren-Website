@@ -283,14 +283,28 @@ p {
 }
 
 /* --- AI Feature Styling --- */
+
+#aiName {
+  width: 100%;
+  margin-bottom: 1rem; /* The spacing that was inline */
+}
+
+/* Optional: Ensure the textarea also spans full width if not already set */
+#aiInput {
+  width: 100%;
+  min-height: 120px;
+  resize: vertical; /* Allows user to make it taller */
+}
 .ai-textarea {
   min-height: 120px;
   resize: vertical;
   margin-bottom: var(--space-sm);
+  width: 100%;
 }
 
 .ai-button {
   width: 100%;
+  margin-bottom: 1rem;
 }
 
 .ai-result {

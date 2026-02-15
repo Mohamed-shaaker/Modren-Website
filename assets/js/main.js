@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // --- CONFIGURATION ---
   const API_URL = "https://intelligence-hub-v2.onrender.com";
 
   // --- 1. Mobile Navigation Toggle ---
@@ -56,8 +55,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-
-  // --- 4. CONTACT FORM
   const contactForm = document.querySelector("form");
 
   if (contactForm) {
@@ -66,7 +63,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const submitBtn = contactForm.querySelector("button");
       const originalText = submitBtn.innerText;
 
-      // UI Loading State
       submitBtn.innerText = "Sending...";
       submitBtn.disabled = true;
 
@@ -87,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (response.ok) {
           submitBtn.innerText = "Message Sent!";
-          submitBtn.style.backgroundColor = "#10b981"; // Success Green
+          submitBtn.style.backgroundColor = "#10b981";
           contactForm.reset();
         } else {
           throw new Error("Server rejected request");
@@ -95,10 +91,9 @@ document.addEventListener("DOMContentLoaded", () => {
       } catch (error) {
         console.error("Error:", error);
         submitBtn.innerText = "Error - Try Again";
-        submitBtn.style.backgroundColor = "#ef4444"; // Error Red
+        submitBtn.style.backgroundColor = "#ef4444";
       }
 
-      // Reset button after 3 seconds
       setTimeout(() => {
         submitBtn.innerText = originalText;
         submitBtn.disabled = false;
@@ -107,53 +102,50 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // --- 5. AI ANALYSIS FEATURE
   const aiBtn = document.getElementById("aiBtn");
   const aiInput = document.getElementById("aiInput");
+  const aiNameInput = document.getElementById("aiName");
   const aiResponse = document.getElementById("aiResponse");
 
   if (aiBtn && aiInput && aiResponse) {
     aiBtn.addEventListener("click", async () => {
       const text = aiInput.value.trim();
+      // Use aiNameInput if it exists, otherwise default to Web Visitor
+      const userName = aiNameInput
+        ? aiNameInput.value.trim() || "Web Visitor"
+        : "Web Visitor";
+
       if (!text) return alert("Please describe your design idea first.");
 
-      // UI Loading State
       aiBtn.disabled = true;
-      aiBtn.innerText = "Analyzing... (Waking up AI)";
+      aiBtn.innerText = "Analyzing...";
       aiResponse.classList.remove("hidden");
-      aiResponse.innerHTML =
-        "<em>Connecting to Intelligence Hub... (First request takes ~30s)</em>";
+      aiResponse.innerHTML = "<em>AI is thinking...</em>";
 
       try {
-        // FIXED: Added trailing slash '/' to match backend routing
-        const res = await fetch(`${API_URL}/analyze/`, {
+        const res = await fetch(`${API_URL}/ai/analyze`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ description: text }),
+          body: JSON.stringify({
+            description: text,
+            client_name: userName,
+          }),
         });
 
-        if (!res.ok) {
-          throw new Error(`Server error: ${res.status}`);
-        }
+        if (!res.ok) throw new Error(`Server error: ${res.status}`);
 
         const data = await res.json();
 
         if (data.analysis) {
-          aiResponse.innerHTML = `<strong>AI Suggestion:</strong><br>${data.analysis}`;
-        } else {
-          // Log the actual data to see what key is being returned if 'analysis' is missing
-          console.log("Backend returned:", data);
-          aiResponse.innerText =
-            "The AI answered, but the format was unexpected. Check console.";
+          aiResponse.innerHTML = `<strong>Suggestions for ${userName}:</strong><br>${data.analysis}`;
         }
       } catch (err) {
         console.error(err);
-        aiResponse.innerText =
-          "Error connecting to backend. Please check your internet or try again.";
+        aiResponse.innerText = "Connection lost. Please try again.";
       } finally {
         aiBtn.disabled = false;
         aiBtn.innerText = "Analyze My Idea";
       }
     });
   }
-});
+}); // <-- This closes the DOMContentLoaded listener
